@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>My Page</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div align="center" class="container">
+	<h1><b>마이페이지</b></h1>
+	<hr>
+	<div class="well">
+		<table class="table" style="width: 50%">
+	      <tr>
+	         <td>아이디<small>(변경 불가)</small></td>
+	         <td><input id="memberId" class="form-control" type="text" readonly ></td>
+	      </tr>
+	      <tr>
+	         <td>기존 비밀번호</td>
+	         <td><input id="memberPw" class="form-control" placeholder="기존 비밀번호" type="password"></td>
+	      </tr>
+	      <tr>
+	         <td>변경 비밀번호</td>
+	         <td><input id="newMemberPw" class="form-control" placeholder="변경할 비밀번호 " type="password"></td>
+	      </tr>
+	      <tr>
+	         <td>비밀번호 확인</td>
+	         <td><input id="newMemberPw2" class="form-control" placeholder="변경할 비밀번호 확인" type="password"></td>
+	      </tr>
+   		</table>
+	</div>
+	<button class="btn btn-primary" id="editInfoBtn">수정하기</button>
+	<button id="toHome" class="btn btn-info">홈으로 ></button>
+	<button id="withDrawBtn" class="btn btn-danger">회원탈퇴</button>
+</div>
+</body>
+<script src="/puzzle/scripts/jquery-3.4.1.min.js"></script>
+<script>	
+	let loginState = "";
+	$(document).ready(function(){		
+		$.ajax({
+			url : "/puzzle/GetSessionInfo",
+			async : false, // 동기요청
+			method : "POST",
+			success : function(json) {
+				loginState = json;
+				console.log("sessionInfo(마이페이지 id): ", loginState);
+			}
+		});		
+		if(loginState == null){
+			alert("로그인을 하셔야 마이페이지를 이용할 수 있습니다!");
+			location.href="/puzzle/login.html";
+		}		 
+		
+		// 나의 정보(id) 출력 
+		$.ajax({
+			url : "/puzzle/SelectMemberInfo",
+			method : "POST",
+			data : {memberId : loginState},
+			success : function(json){
+				let id = json;
+				$("#memberId").val(id);
+			}			
+		});  
+	});
+	// 정보 수정
+	$("#editInfoBtn").click(function(){
+		if($("#newMemberPw").val() != $("#newMemberPw2").val()){
+			alert("입력하신 변경할 비밀번호가 서로 다릅니다 ! 다시 시도하여 주세요. ");
+			return;
+		}
+		$.ajax({
+			url : "/puzzle/UpdateMemberInfo",
+			method : "POST",
+			data : {memberId : $("#memberId").val(),
+					memberPw : $("#memberPw").val(),
+					newMemberPw : $("#newMemberPw").val(),
+			},
+			success : function(json){				
+				alert(json);
+				return;
+			}			
+		});  		
+	});
+	// 회원 탈퇴
+	$("#withDrawBtn").click(function(){
+         $.ajax({
+            url: "/puzzle/SubMember",
+            method: "POST",
+            data: {"memberId":$("#memberId").val(),
+                 "memberPw":$("#memberPw").val()},
+                 success: function(){
+                    location.href = "/puzzle/login.html";
+                      return false;
+                 }
+         });
+   });
+	//홈으로
+	$("#toHome").click(function(){
+		location.href="/puzzle/index.html";
+	});
+</script>
+</html>

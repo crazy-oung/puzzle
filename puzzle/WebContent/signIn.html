@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Login</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div align="center" class="container">
+	<h1><b>로그인</b></h1>
+	<table align ="center" class="table" style="width: 50%">
+      <tr>
+         <td>아이디</td>
+         <td><input id="memberId" class="form-control" type="text"></td>
+      </tr>
+      <tr>
+         <td>비밀번호</td>
+         <td><input id="memberPw" class="form-control" type="password"></td>
+      </tr>
+   </table>
+   <hr>
+   <button id="loginBtn" class="btn btn-info">로그인</button>
+   <hr>
+	공용 아이디: goodee <br>
+	공용 비밀번호: 1
+</div>
+</body>      
+<script src="/puzzle/scripts/jquery-3.4.1.min.js"></script>
+<script>
+	$("#loginBtn").click(function(){
+		console.log("go");
+		$.ajax({
+	        url :"/puzzle/Login",
+	        method : "POST",
+	        data : {memberId:$("#memberId").val(), memberPw:$("#memberPw").val()},
+	        success : function(json){
+	         loginState = json;
+	         console.log("sessionInfo : ", loginState);
+	         location.href = "/puzzle/index.html";
+	         return;
+	        }, 
+	        error: function() {
+				alert("로그인 실패 다시 입력해 주세요.");
+			},
+			fail: function() {
+				alert("로그인 실패 다시 입력해 주세요.");
+			}
+	      });
+	});
+
+</script>
+</html>

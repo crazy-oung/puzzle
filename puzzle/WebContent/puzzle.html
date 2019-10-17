@@ -2,28 +2,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-	table, td{
-		border : 1px solid grey;
-	}
-	table {
-		border-collapse : collapse;
-	}
-</style>
+<title>Puzzle mind start!</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="/jquery-ex/scripts/jquery-3.4.1.min.js"></script>
 </head>
-<body align ="center">
-	<h1>같은 그림 맞추기 ! </h1>
-	<b id="user"></b>님 어서오세요 :) &nbsp;&nbsp;<button id="logoutBtn">로그아웃</button>
+<body>
+<div align ="center">
+	<h1><b><span class="text-primary">퍼즐 마인드</span> : 같은 그림 맞추기 !</b></h1>
 	<hr>
-	<!-- 도전횟수:&nbsp;<b id="count"></b>회 &nbsp;&nbsp;|&nbsp;&nbsp;  -->
-	경과시간:&nbsp;<b id="timer"> 시작! </b>초
+	<b id="user"></b>님 어서오세요 :) 즐거운 시간 보내세요. <3	
 	<hr>
-	<table id="board" align ="center" id="board" width="80%">
+	<table id="board" align ="center" class="table-bordered" width="80%">
 	</table>
 	<hr>
-	<button id="againBtn">다시하기</button>
+	<p>경과시간:&nbsp;<b id="timer"> 시작! </b>초</p>
+	<button id="logoutBtn" class="btn btn-warning">로그아웃</button> 
+	<button id="againBtn" class="btn btn-success">다시하기</button>  
+	<button id="toHomeBtn" class="btn btn-primary">홈으로 > </button>
+</div>	
 </body>
-<script src="/jquery-ex/scripts/script.js"></script>
+<script src="/puzzle/scripts/puzzle.js"></script>
 </html>

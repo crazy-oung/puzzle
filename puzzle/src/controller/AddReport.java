@@ -30,6 +30,6 @@ public class AddReport extends HttpServlet {
       
       
       ReportService reportService = new ReportService();
-      reportService.AddReport(report);
+      reportService.addReport(report);
    }
 }

@@ -4,6 +4,14 @@ public class Report {
    private String memberId;
    private int count;
    private int timer;
+   private String reportDate;
+   
+   public String getReportDate() {
+	   return reportDate;
+   }
+   public void setReportDate(String reportDate) {
+	   this.reportDate = reportDate;
+   }
    public String getMemberId() {
       return memberId;
    }
@@ -22,10 +30,12 @@ public class Report {
    public void setTimer(int timer) {
       this.timer = timer;
    }
-   @Override
-   public String toString() {
-      return "Report [memberId=" + memberId + ", count=" + count + ", timer=" + timer + "]";
-   }
+	@Override
+	public String toString() {
+		return "Report [memberId=" + memberId + ", count=" + count + ", timer=" + timer + ", reportDate=" + reportDate
+				+ "]";
+	}
+   
    
    
 }
