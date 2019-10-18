@@ -1,5 +1,5 @@
+let loginState = "";
 $(document).ready(function(){
-	let loginState = "";
 	
 	// 로그인 확인
 	$.ajax({
@@ -12,22 +12,22 @@ $(document).ready(function(){
 		}
 	});
 
-	let menu =	" <button type='button' class='btn btn-success' id='totalTop10'>종합 10</button> " +
-				" <button type='button' class='btn btn-success' id='dailyTop10'>오늘의 top10</button> " + 
-				" <button type='button' class='btn btn-success' id='monthlyTop10'>이달의 top10</button> ";
+	let menu =	" <button type='button' class='btn btn-success' id='totalTop10'>🏆종합 TOP10</button> " +
+				" <button type='button' class='btn btn-success' id='dailyTop10'>🥇오늘의 TOP10</button> " + 
+				" <button type='button' class='btn btn-success' id='monthlyTop10'>🏅이달의 TOP10</button> ";
 	//유저 확인
 	console.log(loginState);
 	if (loginState === null) {
-		menu += "<button type='button' class='btn btn-warning' id='login'>로그인</button>" +
-				" <button type='button' class='btn btn-warning' id='signUp'>회원가입</button> ";
+		menu += "<button type='button' class='btn btn-warning' id='login'>🔑로그인</button>" +
+				" <button type='button' class='btn btn-warning' id='signUp'>🎆회원가입</button> ";
 		$("#menu").append(menu);
 		console.log("비회원");
 	}else{
 		$("#loginState").append("<b>"+loginState+"</b>님 어서오세요!");
-		menu += " <button type='button' class='btn btn-danger' id='gameStart'>게임 스타트!</button> " +
-				" <button type='button' class='btn btn-primary' id='myPage'>마이페이지</button> " + 
-				" <button type='button' class='btn btn-primary' id='myReport'>마이리포트</button> " +
-				" <button type='button' class='btn btn-warning' id='logout'>로그아웃</button> "; 
+		menu += " <button type='button' class='btn btn-danger' id='gameStart'>🎮게임 스타트!</button> " +
+				" <button type='button' class='btn btn-primary' id='myPage'>👀마이페이지</button> " + 
+				" <button type='button' class='btn btn-primary' id='myReport'>📃마이리포트</button> " +
+				" <button type='button' class='btn btn-warning' id='logout'>🔐로그아웃</button> "; 
 		$("#menu").append(menu);
 		console.log("회원");
 	}
@@ -62,12 +62,13 @@ $(document).ready(function(){
 		console.log("go");
 		location.href="/puzzle/signUp.html";
 	});
+	
 	let report = "";
 	//순위 출력		
 	// 종합 탑 10
 	$("#totalTop10").click(function(){		
 		console.log("totalTop10!");
-		$("#top10Text").text("종합 Top 10");	
+		$("#top10Text").text("🏆 종합 Top 10 🏆");	
 		$("#report").empty();
 		report = "";
 		report +="<thead><tr><th>순위</th><th>아이디</th><th>횟수</th><th>기록</th><th>날짜 시간</th></tr></thead><tbody>";
@@ -86,7 +87,7 @@ $(document).ready(function(){
 					report += "<td>"+item.reportDate+"</td>";
 					report += "</tr>";					
 				})
-				report +="</tobdy>";
+				report +="</tbody>";
 				$("#report").append(report);
 			}                           
 		}); 		
@@ -95,7 +96,7 @@ $(document).ready(function(){
 	// 데일리 탑10
 	$("#dailyTop10").click(function(){
 		console.log("dailyTop10!");
-		$("#top10Text").text("오늘의 Top 10");
+		$("#top10Text").text("🥇 오늘의 Top 10 🥇");
 		$("#report").empty();
 		report = "";
 		$.ajax({
@@ -104,7 +105,7 @@ $(document).ready(function(){
 			success : function(json){				
 //				console.log(json);					
 				if(json == ""){
-					$("#report").append("<h2>데이터가 없습니다 ! 기록을 세워 보세요 ! :)<h2>");
+					$("#report").append("<h4>순위권에 든 플레이어가 없습니다! 오늘의 랭커가 되어보세요 !🔥<h4>");
 					return;
 				}				
 				report +="<thead><tr><th>순위</th><th>아이디</th><th>횟수</th><th>기록</th><th>날짜 시간</th></tr></thead><tbody>";
@@ -117,7 +118,7 @@ $(document).ready(function(){
 					report += "<td>"+item.reportDate+"</td>";
 					report += "</tr>";					
 				})
-				report +="</tobdy>";
+				report +="</tbody>";
 				$("#report").append(report);
 			}                           
 		}); 
@@ -127,7 +128,7 @@ $(document).ready(function(){
 	// 먼슬리 탑10
 	$("#monthlyTop10").click(function(){
 		console.log("monthlyTop10!");
-		$("#top10Text").text("이달의 Top 10");
+		$("#top10Text").text("🏅 이달의 Top 10 🏅");
 		$.ajax({
 			url: "/puzzle/SelectMonthlyTop10",
 			method: "POST",
@@ -135,7 +136,7 @@ $(document).ready(function(){
 //				console.log(json);
 				report = "";	
 				if(json == ""){
-					$("#report").text("<h2>데이터가 없습니다 ! 기록을 세워 보세요 ! :)</h2>");
+					$("#report").text("<h4>순위권에 든 플레이어가 없습니다! 이달의 랭커가 되어보세요 !🏅<h4>");
 					return;
 				}			
 				$("#report").empty();				
@@ -149,7 +150,7 @@ $(document).ready(function(){
 					report += "<td>"+item.reportDate+"</td>";
 					report += "</tr>";					
 				})
-				report +="</tobdy>";
+				report +="</tbody>";
 				$("#report").append(report);
 			}                           
 		}); 
@@ -166,6 +167,39 @@ $(document).ready(function(){
 	$("#myPage").click(function(){
 		console.log("myPage!");
 		location.href="/puzzle/myPage.html";		
+	});
+	
+
+	
+	// 마이리포트 버튼
+	$("#myReport").click(function(){
+		console.log("myReport!");
+		$("#top10Text").text("📃 마이 리포트 📃");	
+		$("#report").empty();
+		report = "";
+		report +="<thead><tr><th>번호</th><th>기록번호</th><th>횟수</th><th>기록</th><th>날짜</th></tr></thead><tbody>";
+		$.ajax({
+			url: "/puzzle/SelectMemberReport",
+			data : {memberId : loginState},
+			method : "POST",
+			success : function(json){
+				if(json == ""){
+					$("#report").text("<h4>순위권에 든 플레이어가 없습니다! 이달의 랭커가 되어보세요 !🏅<h4>");
+					return;
+				}			
+				$(json).each(function(index, item){
+					report += "<tr>";
+					report += "<td>"+(index+1)+"</td>";
+					report += "<td>"+item.reportId+"</td>";
+					report += "<td>"+item.count+"</td>";
+					report += "<td>"+item.timer+"</td>";
+					report += "<td>"+item.reportDate+"</td>";
+					report += "</tr>";					
+				})
+				report +="</tbody>";
+				$("#report").append(report);
+			},
+		});
 	});
 	
 })

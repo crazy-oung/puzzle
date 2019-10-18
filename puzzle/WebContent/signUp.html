@@ -32,6 +32,10 @@
 </body>
 <script>
    $("#joinBtn").click(function(){
+	   if($("#memberId") == "" || $("#memberId")==""){
+		   alert("정보를 기입해주세요 ㅠㅠ");
+		   return;
+	   }
       $.ajax({
            url :"/puzzle/AddMember",
            method : "POST",

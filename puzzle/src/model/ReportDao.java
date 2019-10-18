@@ -17,7 +17,7 @@ public class ReportDao {
 		List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
-	      String sql = "SELECT report_date, count, timer FROM report "
+	      String sql = "SELECT report_id, report_date, count, timer FROM report "
 	      				+ "WHERE member_id = ? ORDER BY report_date DESC";
 	      // todo 마이리포트 페이징 *
 	      try {
@@ -26,6 +26,7 @@ public class ReportDao {
 		      rs = stmt.executeQuery();	      
 		      while(rs.next()) {
 		         Report report = new Report();
+		         report.setReportId(rs.getInt("report_id"));
 		         report.setCount(rs.getInt("count"));
 		         report.setTimer(rs.getInt("timer"));
 		         report.setReportDate(rs.getString("report_date"));
