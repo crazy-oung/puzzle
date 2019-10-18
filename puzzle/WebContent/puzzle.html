@@ -12,21 +12,78 @@
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script src="/jquery-ex/scripts/jquery-3.4.1.min.js"></script>
+<style>
+.cards {
+    width: 200px;
+    height: 150px;
+    position: relative;
+    -webkit-perspective: 800px;
+    -moz-perspective: 800px;
+    -o-perspective: 800px;
+    perspective: 800px;
+}
+.card {
+	cursor : pointer;
+	border : none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    -webkit-transition: -webkit-transform 0.4s;
+    -moz-transition: -moz-transform 0.4s;
+    -o-transition: -o-transform 0.4s;
+    transition: transform 0.5s;
+    -webkit-transform-style: preserve-3d;
+    -moz-transform-style: preserve-3d;
+    -o-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    -webkit-transform-origin: 50% 50%;
+}
+.card div {
+    display: block;
+    height: 100%;
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 100px;
+    position: absolute;
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+.card .back {
+    background: black;
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+.card.flipped {
+    -webkit-transform: rotateY( 180deg );
+    -moz-transform: rotateY( 180deg );
+    -o-transform: rotateY( 180deg );
+    transform: rotateY( 180deg );
+}
+
+</style>
 </head>
 <body>
 <div align ="center">
-	<h1><b><span class="text-primary">퍼즐 마인드</span> : 같은 그림 맞추기 !</b></h1>
+	<h1><b><span class="text-primary">🧩 퍼즐 마인드 🧩</span> : 같은 그림 맞추기 !</b></h1>
 	<hr>
-	<b id="user"></b>님 어서오세요 :) 즐거운 시간 보내세요. <3	
+	😆 <b id="user"></b>님 즐거운 시간 보내세요 💖 
+	<button id="logoutBtn" class="btn btn-warning">로그아웃 💨</button> 
 	<hr>
-	<table id="board" align ="center" class="table-bordered" width="80%">
+	<table id="board" align ="center" class="table-borderless" width="80%">
 	</table>
 	<hr>
+	<p>3초동안 최대한 많이 기억하세요 !!</p>
 	<p>경과시간:&nbsp;<b id="timer"> 시작! </b>초</p>
-	<button id="logoutBtn" class="btn btn-warning">로그아웃</button> 
-	<button id="againBtn" class="btn btn-success">다시하기</button>  
-	<button id="toHomeBtn" class="btn btn-primary">홈으로 > </button>
+	<button id="toHomeBtn" class="btn btn-primary">홈으로 💥 </button>
+	<button id="againBtn" class="btn btn-success">다시하기 💦</button>  
 </div>	
 </body>
 <script src="/puzzle/scripts/puzzle.js"></script>
+<script src="/path/to/jquery.flip.min.js"></script>
 </html>

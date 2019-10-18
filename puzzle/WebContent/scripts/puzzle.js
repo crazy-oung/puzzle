@@ -5,6 +5,8 @@ let model = [ "p0.png", "p0.png", "p1.png", "p1.png", "p2.png", "p2.png",
 		"p13.png", "p13.png", "p14.png", "p14.png", "p15.png", "p15.png",
 		"p16.png", "p16.png", "p17.png", "p17.png", ]; // [0] ~ [17]
 let loginState = "";
+let timerNum = 0;
+let temp = 0;
 $(document).ready( function(){
 
 	let count = 0;
@@ -34,12 +36,19 @@ $(document).ready( function(){
 		return false;
 	}*/
 	
-	let timerNum = 0;
-	timer = setInterval(function() {
-		timerNum++;
-		$("#timer").text(timerNum);
+	timer = setInterval(function() {		
+		if(timerNum==3 && temp<1){
+			timerNum =0;
+			temp=1;
+			$(".card").each(function(){
+				$(this).toggleClass("flipped");
+			})
+		}
+		timerNum++;		
+		$("#timer").text(timerNum);		
 	}, 1000);
-
+		
+	
 	// model이 뒤섞여 순서가 랜덤으로 출력.
 	for (let i = 0; i < 100000; i++) {
 		let ran = Math.floor(Math.random() * 36); // 0~35
@@ -54,23 +63,17 @@ $(document).ready( function(){
 		// 우클릭 방지 : oncontextmenu ='return
 		// false'
 		// 드래그 방지 : ondragstart ='return false'
-		let html = "<td oncontextmenu ='return false' ondragstart ='return false' width='150px'>"
-				+ "<input class='pic p1'  type='image' src='/puzzle/pzImage/"
-				+ item + "'></td>";
+		let html = "<td oncontextmenu ='return false' ondragstart ='return false' ><div class='cards'>"
+				+ "<div class='card' id='pic-"+item+"'><div class='front' id='p"+index+"'><input type='image' src='/puzzle/pzImage/"
+				+ item + "'></div><div class='back'><p>❓</p></div></div></div></td>";
 
 		if (index / 6 > 0 && index % 6 == 0) {
 			console.log(index);
 			$("#board").append("</tr><tr>");
 		}
-		$("#board").append(html);
+		$("#board").append(html);		
 	});
 	
-	// 서서히 이미지가 사라짐.
-	$(".pic").each(function() {
-		$(this).animate({
-			opacity : 0.00
-		}, 3000); // 이슈 : 드래그 버그 ->우클릭 방지로 해결.
-	});
 	
 	//로그아웃 버튼
 	$("#logoutBtn").click(function(){
@@ -119,27 +122,29 @@ $(document).ready( function(){
 	
 	console.log(loginState);
 	// 1클릭과 2클릭이 같다면 같은 이미지는 멈춤, 아니라면 사라짐.
-	$(".pic").click( function() {
+	$(".card").click(function(e){
+		if(temp < 1 || $(this).children(".front").attr("id") == $(onePic).children(".front").attr("id") || $(this).children(".front").attr("id") == $(twoPic).children(".front").attr("id")){
+			return;
+		}
+		if(state == 2){
+			return;
+		}
 		total++;
 		state++;
-		$(this).attr("disabled", true); // 더블클릭 방지
-		
+		$(this).toggleClass("flipped");
 		if (1 == state) {
 			console.log("1");
-			$(this).animate({
-				opacity : 1
-			}, 500);
 			onePic = $(this);
-		} else if (2 == state) {
+			console.log(onePic);			
+		} 
+		if (2 == state) {
 			console.log("2");
-			$(this).animate({
-				opacity : 1
-			}, 500);
 			twoPic = $(this);
-			if ($(onePic).attr("src") == $(twoPic).attr("src")) {
+			console.log(twoPic);
+			if ($(onePic).attr("id") == $(twoPic).attr("id")) {
 				success++;
 				if (success == model.length / 2) {
-					alert("게임종료!");
+					alert("게임종료! "+loginState+"님의 기록시간은 "+timerNum+"이고 횟수는 "+count+"입니다 🌟");
 					console.log(loginState);
 					// 디비에 게임기록 저장
 					$.ajax({
@@ -154,19 +159,20 @@ $(document).ready( function(){
 					clearInterval(timer);
 					return;
 				}
+				$(onePic).unbind("click");
+				$(twoPic).unbind("click");
+				state = 0;
 			} else {
-				$(onePic).animate({
-					opacity : 0
-				}, 500);
-				$(twoPic).animate({
-					opacity : 0
-				}, 500);
-				$(onePic).attr("disabled", false); // 더블클릭
-													// 방지
-													// 해제
-				$(twoPic).attr("disabled", false);
-			}
-			state = 0;
+				// 2번째 선택한 카드 확인
+				setTimeout(function() {
+					  console.log('Works!');
+					  $(onePic).toggleClass("flipped");
+					  $(twoPic).toggleClass("flipped");
+					  onePic = null;
+					  twoPic = null;
+					  state = 0;
+				}, 370);				
+			}			
 		}
 	});
 });
