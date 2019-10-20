@@ -8,7 +8,6 @@ let loginState = "";
 let timerNum = 0;
 let temp = 0;
 $(document).ready( function(){
-
 	let count = 0;
 	
 	// 로그인 확인
@@ -30,23 +29,13 @@ $(document).ready( function(){
 	}		
 	// 상단에 로그인 id표시
 	$("#user").text(loginState);
+	alert("3초 동안 최대한 많이 기억하세요 ! 확인 버튼을 누르면 시작합니다 -!!!");
 	// 상단에 도전 횟수 표시
 	/*$("#count").text(count);
 	if (loginState = null) {
 		return false;
 	}*/
 	
-	timer = setInterval(function() {		
-		if(timerNum==3 && temp<1){
-			timerNum =0;
-			temp=1;
-			$(".card").each(function(){
-				$(this).toggleClass("flipped");
-			})
-		}
-		timerNum++;		
-		$("#timer").text(timerNum);		
-	}, 1000);
 		
 	
 	// model이 뒤섞여 순서가 랜덤으로 출력.
@@ -73,7 +62,26 @@ $(document).ready( function(){
 		}
 		$("#board").append(html);		
 	});
-	
+	let Max = 36;
+	let index = 1;
+	timer = setInterval(function() {		
+		if(timerNum==3 && temp<1){
+			timerNum =0;
+			$(".card").each(function(i){
+				let card = $(this);
+				flip = setTimeout( function(){
+					console.log("works!");
+					$(card).toggleClass("flipped");							
+				}, i*90);
+				temp =1;
+			})
+			$("#timer").text("시작합니다!");
+			delay();
+			delay();
+		}
+		timerNum++;		
+		$("#timer").text(timerNum);		
+	}, 1000);
 	
 	//로그아웃 버튼
 	$("#logoutBtn").click(function(){
@@ -144,7 +152,7 @@ $(document).ready( function(){
 			if ($(onePic).attr("id") == $(twoPic).attr("id")) {
 				success++;
 				if (success == model.length / 2) {
-					alert("게임종료! "+loginState+"님의 기록시간은 "+timerNum+"이고 횟수는 "+count+"입니다 🌟");
+					alert("게임종료! "+loginState+"님의 기록시간은 "+timerNum+"이고 횟수는 "+total+"입니다 🌟");
 					console.log(loginState);
 					// 디비에 게임기록 저장
 					$.ajax({
