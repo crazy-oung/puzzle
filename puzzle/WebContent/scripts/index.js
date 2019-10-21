@@ -27,7 +27,7 @@ $(document).ready(function(){
 		menu += " <button type='button' class='btn btn-danger' id='gameStart'>🎮게임 스타트!</button> " +
 				" <button type='button' class='btn btn-primary' id='myPage'>👀마이페이지</button> " + 
 				" <button type='button' class='btn btn-primary' id='myReport'>📃마이리포트</button> " +
-				" <button type='button' class='btn btn-warning' id='logout'>🔐로그아웃</button> "; 
+				" <button type='button' class='btn btn-warning' id='logout'>로그아웃 💨</button> "; 
 		$("#menu").append(menu);
 		console.log("회원");
 	}
@@ -89,6 +89,8 @@ $(document).ready(function(){
 				})
 				report +="</tbody>";
 				$("#report").append(report);
+				$("#view").hide();
+				$("#view").slideDown("slow");
 			}                           
 		}); 		
 	});
@@ -105,7 +107,9 @@ $(document).ready(function(){
 			success : function(json){				
 //				console.log(json);					
 				if(json == ""){
-					$("#report").append("<h4>순위권에 든 플레이어가 없습니다! 오늘의 랭커가 되어보세요 !🔥<h4>");
+					$("#report").append("<hr><br><br><h1 class='display-4'><small>순위권에 든 플레이어가 없습니다!<br>오늘의 랭커가 되어보세요 !🔥</small></h1>");
+					$("#view").hide();
+					$("#view").slideDown("fast");
 					return;
 				}				
 				report +="<thead><tr><th>순위</th><th>아이디</th><th>횟수</th><th>기록</th><th>날짜 시간</th></tr></thead><tbody>";
@@ -120,9 +124,10 @@ $(document).ready(function(){
 				})
 				report +="</tbody>";
 				$("#report").append(report);
+				$("#view").hide();
+				$("#view").slideDown("fast");
 			}                           
 		}); 
-		$("#report").append(report);
 	});
 	
 	// 먼슬리 탑10
@@ -136,7 +141,9 @@ $(document).ready(function(){
 //				console.log(json);
 				report = "";	
 				if(json == ""){
-					$("#report").text("<h4>순위권에 든 플레이어가 없습니다! 이달의 랭커가 되어보세요 !🏅<h4>");
+					$("#report").append("<hr><br><br><h1 class='display-4'><small>순위권에 든 플레이어가 없습니다!<br>오늘의 랭커가 되어보세요 !🔥</small></h1>");
+					$("#view").hide();
+					$("#view").slideDown("fast");
 					return;
 				}			
 				$("#report").empty();				
@@ -152,9 +159,10 @@ $(document).ready(function(){
 				})
 				report +="</tbody>";
 				$("#report").append(report);
+				$("#view").hide();
+				$("#view").slideDown("fast");
 			}                           
-		}); 
-		$("#report").append(report);
+		}); 		
 	});
 	
 	// 게임스타트 버튼
@@ -177,16 +185,21 @@ $(document).ready(function(){
 		$("#top10Text").text("📃 마이 리포트 📃");	
 		$("#report").empty();
 		report = "";
-		report +="<thead><tr><th>번호</th><th>기록번호</th><th>횟수</th><th>기록</th><th>날짜</th></tr></thead><tbody>";
 		$.ajax({
 			url: "/puzzle/SelectMemberReport",
 			data : {memberId : loginState},
 			method : "POST",
 			success : function(json){
 				if(json == ""){
-					$("#report").text("<h4>순위권에 든 플레이어가 없습니다! 이달의 랭커가 되어보세요 !🏅<h4>");
+					report="<hr><br><br><h1 class='display-4'><small>기록이 아직 없군요 ..!<br>기록을 세워 랭커에 도전해보세요 !🔥</small></h1>";
+					$("#report").append(report);
+					$("#view").hide();
+					$("#view").slideDown("fast");
+//					$("#report").hide();
+//					$("#report").show("slow");
 					return;
 				}			
+				report +="<thead><tr><th>번호</th><th>기록번호</th><th>횟수</th><th>기록</th><th>날짜</th></tr></thead><tbody>";
 				$(json).each(function(index, item){
 					report += "<tr>";
 					report += "<td>"+(index+1)+"</td>";
@@ -198,6 +211,8 @@ $(document).ready(function(){
 				})
 				report +="</tbody>";
 				$("#report").append(report);
+				$("#view").hide();
+				$("#view").slideDown("fast");
 			},
 		});
 	});
