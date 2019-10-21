@@ -51,7 +51,7 @@ public class ReportDao {
 	      ResultSet rs = null;
 	      String sql = "SELECT member_id, report_date, count, timer FROM report "
 	      		+ "WHERE MONTH(report_date) = MONTH(NOW())"
-	      		+ "ORDER BY count DESC, timer DESC LIMIT 0, ?;";
+	      		+ "ORDER BY timer asc LIMIT 0, ?;";
 	      try {
 	      stmt = conn.prepareStatement(sql);
 	      stmt.setInt(1, limit);
@@ -82,7 +82,7 @@ public class ReportDao {
 	      ResultSet rs = null;
 	      String sql = "SELECT member_id, report_date, count, timer FROM report "
 		      		+ "WHERE DATE(report_date) = DATE(NOW())"
-		      		+ "ORDER BY count DESC, timer DESC LIMIT 0, ?;";
+		      		+ "ORDER BY timer asc LIMIT 0, ?;";
 	      try {
 	      stmt = conn.prepareStatement(sql);
 	      stmt.setInt(1, limit);
@@ -113,7 +113,7 @@ public class ReportDao {
 	      ResultSet rs = null;
 	      String sql = "SELECT member_id, report_date, count, timer FROM report "
 		      		+ "WHERE report_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK) AND NOW()"
-		      		+ "ORDER BY count DESC, timer DESC LIMIT 0, ?;";
+		      		+ "ORDER BY timer asc LIMIT 0, ?;";
 	      try {
 	      stmt = conn.prepareStatement(sql);
 	      stmt.setInt(1, limit);
@@ -142,7 +142,7 @@ public class ReportDao {
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
-	      String sql = "SELECT member_id, report_date, count, timer FROM report ORDER BY count DESC, timer DESC LIMIT 0, ?;";
+	      String sql = "SELECT member_id, report_date, count, timer FROM report ORDER BY timer asc LIMIT 0, ?;";
 	      try {
 	      stmt = conn.prepareStatement(sql);
 	      stmt.setInt(1, limit);
