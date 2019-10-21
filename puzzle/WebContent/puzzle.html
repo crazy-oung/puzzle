@@ -11,6 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- 제이쿼리 -->
 <script src="/jquery-ex/scripts/jquery-3.4.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <style>
@@ -29,10 +30,10 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    -webkit-transition: -webkit-transform 0.4s;
-    -moz-transition: -moz-transform 0.4s;
-    -o-transition: -o-transform 0.4s;
-    transition: transform 0.4s;
+    -webkit-transition: -webkit-transform 0.2s;
+    -moz-transition: -moz-transform 0.2s;
+    -o-transition: -o-transform 0.2s;
+    transition: transform 0.2s;
     -webkit-transform-style: preserve-3d;
     -moz-transform-style: preserve-3d;
     -o-transform-style: preserve-3d;
@@ -71,19 +72,24 @@
 </head>
 <body>
 <div align ="center">
-	<h1><b><span class="text-primary">🧩 퍼즐 마인드 🧩</span> : 같은 그림 맞추기 !</b></h1>
-	<hr>
+	<h4><b><span class="text-primary">🧩 퍼즐 마인드 🧩</span> : 같은 그림 맞추기 !</b></h4>
 	😆 <b id="user"></b>님 즐거운 시간 보내세요 💖 
-	<button id="logoutBtn" class="btn btn-warning">로그아웃 💨</button> 
 	<hr>
-	<table id="board" align ="center" class="table-borderless" width="60%">
+	<p>
+		<b id="timer"> 시작! </b> &nbsp; 
+		<button class="btn btn-sm btn-info text-warning" id="hintBtn">전체보기</button> &nbsp; 
+		<small style="font-style: italic;">남은 힌트 횟수: <b><span id="remainHint"></span></b> </small>
+	</p>
+	<hr>
+	<table id="board" align ="center" class="table-borderless" class="container">
 	</table>
 	<hr>
-	<p>경과시간:&nbsp;<b id="timer"> 시작! </b>초</p>
-	<button id="toHomeBtn" class="btn btn-primary">홈으로 💥 </button>
+	<p>도전횟수:&nbsp;<b id="count">0</b>회 </p>
+	<hr>
 	<button id="againBtn" class="btn btn-success">다시하기 💦</button>  
+	<button id="toHomeBtn" class="btn btn-primary">홈으로 💥 </button>
+	<button id="logoutBtn" class="btn btn-warning">로그아웃 💨</button> 
 </div>	
 </body>
 <script src="/puzzle/scripts/puzzle.js"></script>
-<script src="/path/to/jquery.flip.min.js"></script>
 </html>

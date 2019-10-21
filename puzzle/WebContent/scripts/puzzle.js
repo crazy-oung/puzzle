@@ -1,12 +1,74 @@
-let model = [ "p0.png", "p0.png", "p1.png", "p1.png", "p2.png", "p2.png",
-		"p3.png", "p3.png", "p4.png", "p4.png", "p5.png", "p5.png", "p6.png",
-		"p6.png", "p7.png", "p7.png", "p8.png", "p8.png", "p9.png", "p9.png",
-		"p10.png", "p10.png", "p11.png", "p11.png", "p12.png", "p12.png",
-		"p13.png", "p13.png", "p14.png", "p14.png", "p15.png", "p15.png",
-		"p16.png", "p16.png", "p17.png", "p17.png", ]; // [0] ~ [17]
+//stage 1  model1 	4*4
+let model1 = [ 	"p0.png", "p0.png", 
+				"p1.png", "p1.png", 
+				"p2.png", "p2.png",
+				"p3.png", "p3.png", 
+				"p4.png", "p4.png",
+				"p5.png", "p5.png", 
+				"p6.png", "p6.png", 
+				"p7.png", "p7.png", ];
+
+//stage 2 model2	6*6
+let model2 = [ 	"p0.png", "p0.png", 
+				"p1.png", "p1.png", 
+				"p2.png", "p2.png",
+				"p3.png", "p3.png", 
+				"p4.png", "p4.png", 
+				"p5.png", "p5.png", 
+				"p6.png", "p6.png", 
+				"p7.png", "p7.png", 
+				"p8.png", "p8.png", 
+				"p9.png", "p9.png",
+				"p10.png", "p10.png", 
+				"p11.png", "p11.png", 
+				"p12.png", "p12.png",
+				"p13.png", "p13.png", 
+				"p14.png", "p14.png", 
+				"p15.png", "p15.png",
+				"p16.png", "p16.png", 
+				"p17.png", "p17.png", ]; // [0] ~ [17]
+
+//stage 3 model3	8*8
+let model3 = [ 	"p0.png", "p0.png", 
+				"p1.png", "p1.png", 
+				"p2.png", "p2.png",
+				"p3.png", "p3.png", 
+				"p4.png", "p4.png", 
+				"p5.png", "p5.png", 
+				"p6.png", "p6.png", 
+				"p7.png", "p7.png", 
+				"p8.png", "p8.png", 
+				"p9.png", "p9.png",
+				"p10.png", "p10.png", 
+				"p11.png", "p11.png", 
+				"p12.png", "p12.png",
+				"p13.png", "p13.png", 
+				"p14.png", "p14.png", 
+				"p15.png", "p15.png",
+				"p16.png", "p16.png", 
+				"p17.png", "p17.png",
+				"p0.png", "p0.png", 
+				"p1.png", "p1.png", 
+				"p2.png", "p2.png",
+				"p3.png", "p3.png", 
+				"p4.png", "p4.png", 
+				"p5.png", "p5.png", 
+				"p6.png", "p6.png", 
+				"p7.png", "p7.png", 
+				"p8.png", "p8.png", 
+				"p9.png", "p9.png",
+				"p10.png", "p10.png", 
+				"p11.png", "p11.png", 
+				"p12.png", "p12.png",
+				"p13.png", "p13.png", ]; // [0] ~ [31]
+
 let loginState = "";
 let timerNum = 0;
 let temp = 0;
+let cardRow = 4;
+let remainHint = 2;
+// 스테이지 시작시 기억을 위해 주는 시간 
+let timeLeft = 4;
 $(document).ready( function(){
 	let count = 0;
 	
@@ -20,31 +82,32 @@ $(document).ready( function(){
 			console.log("sessionInfo : ", loginState);
 		}
 	});
+	
 	console.log(loginState);
-	// 로그인 확인
+	// 로그인 안했을 시 돌아가기
 	if (loginState == null) {
 		location.href = "/puzzle/signIn.html";
-		alert("로그인을 해야 게임을 플레이 할 수 있습니다. 아이디와 비밀번호만 입력하면 되는 간단한 절차이오니 어서 회원가입 해주세요 <3 <3 <3");
+		alert("로그인을 해야 게임을 플레이 할 수 있습니다 T.T \n🎀 아이디와 비밀번호만 입력하면 되니 같이 회원가입을 하러 가봅시다! 🎀");
 		return false;
 	}		
 	// 상단에 로그인 id표시
 	$("#user").text(loginState);
-	alert("3초 동안 최대한 많이 기억하세요 ! 확인 버튼을 누르면 시작합니다 -!!!");
-	// 상단에 도전 횟수 표시
-	/*$("#count").text(count);
-	if (loginState = null) {
-		return false;
-	}*/
 	
-		
-	
+	//게임 시작시 알림 띄움
+	alert("3초 동안 최대한 많이 기억하세요 ! \n확인 버튼을 누르면 시작합니다 !");
+	// 힌트 개수 표시
+	$("#remainHint").text(remainHint);
+	// 스테이지 초기화
+	let stage =1;	
+	// 모델 초기화 
+	let model = model1;
 	// model이 뒤섞여 순서가 랜덤으로 출력.
-	for (let i = 0; i < 100000; i++) {
-		let ran = Math.floor(Math.random() * 36); // 0~35
-		let tmp = model[0];
-		model[0] = model[ran];
-		model[ran] = tmp
-	}
+//	for (let i = 0; i < 100000; i++) {
+//		let ran = Math.floor(Math.random() * model.length); // 0~ 카드갯수 -1 까지
+//		let tmp = model[0];
+//		model[0] = model[ran];
+//		model[ran] = tmp
+//	}
 	
 	// 16개 이미지 출력.
 	$("#board").append("<tr>");
@@ -54,33 +117,37 @@ $(document).ready( function(){
 		// 드래그 방지 : ondragstart ='return false'
 		let html = "<td oncontextmenu ='return false' ondragstart ='return false' ><div class='cards'>"
 				+ "<div class='card' id='pic-"+item+"'><div class='front' id='p"+index+"'><input type='image' src='/puzzle/pzImage/"
-				+ item + "'></div><div class='back'><p>❓</p></div></div></div></td>";
+				+ item + "'></div><div class='back'><p>🎆</p></div></div></div></td>";
 
-		if (index / 6 > 0 && index % 6 == 0) {
+		if (index / cardRow > 0 && index % cardRow == 0) {
 			console.log(index);
 			$("#board").append("</tr><tr>");
 		}
 		$("#board").append(html);		
 	});
-	let Max = 36;
-	let index = 1;
-	timer = setInterval(function() {		
-		if(timerNum==3 && temp<1){
-			timerNum =0;
-			$(".card").each(function(i){
-				let card = $(this);
-				flip = setTimeout( function(){
-					console.log("works!");
-					$(card).toggleClass("flipped");							
-				}, i*90);
-				temp =1;
-			})
-			$("#timer").text("시작합니다!");
-			delay();
-			delay();
+	// 타이머 시작
+	timer = setInterval(function() {
+		console.log(timeLeft,"<- 남은시간!!! @timer");
+		if(timeLeft > 0 ){
+			timeLeft --;
+			console.log(timeLeft,"<- 남은시간 감소");
+			if(timeLeft==0){
+				$(".card").each(function(i){
+					let card = $(this);
+					flip = setTimeout( function(){
+						console.log("works!");
+						$(card).toggleClass("flipped");							
+					}, i*18);
+				})
+				$("#timer").text("시작합니다!");
+				temp = 1;
+				return;
+			}
+			$("#timer").text("시작까지 "+timeLeft+"초");				
+			return;			
 		}
-		timerNum++;		
-		$("#timer").text(timerNum);		
+		timerNum++;				
+		$("#timer").text("경과시간 " + timerNum+" 초");		
 	}, 1000);
 	
 	//로그아웃 버튼
@@ -112,6 +179,26 @@ $(document).ready( function(){
 		location.href = "/puzzle/index.html";			
 	});
 	
+	// 힌트 버튼 클릭시 힌트 사용 가능 횟수 감소
+	$("#hintBtn").click(function(){		
+		remainHint --;
+		$("#remainHint").text(remainHint);
+		$(".card").each(function(){			
+			$(this).toggleClass("flipped");
+		})
+		setTimeout(function(){
+			console.log("대기 후 다시 돌림 ")
+			$(".card").each(function(){
+				$(this).toggleClass("flipped");
+			})
+		}, 1000)
+		
+		// 힌트 실행 후 남은 횟수 0 이면 비활성화 
+		if(remainHint==0){
+			$("#hintBtn").attr("disabled", "disabled");
+			return;
+		}		
+	})
 	
 	/*
 	 * 게임 실행
@@ -126,18 +213,25 @@ $(document).ready( function(){
 	let state = 0; // 클릭 안했을시 0 첫클릭 1 두번째 클릭 2
 	let success = 0; // 몇개의 그림을 맞췄는지 8이되면 게임이 끝.
 	let onePic = null;
-	let twoPic = null;
-	
+	let twoPic = null;	
 	console.log(loginState);
 	// 1클릭과 2클릭이 같다면 같은 이미지는 멈춤, 아니라면 사라짐.
-	$(".card").click(function(e){
-		if(temp < 1 || $(this).children(".front").attr("id") == $(onePic).children(".front").attr("id") || $(this).children(".front").attr("id") == $(twoPic).children(".front").attr("id")){
+	$(document).on("click", ".card", function(){
+		console.log($(this),"click!");
+		// 게임이 시작전이면 클릭 못하게 막기
+		if(temp < 1 ){
 			return;
 		}
+		// 더블 클릭 방지
+		if($(this).attr('class') === "card"){
+			return;
+		}
+		//클릭 횟수 소진시 아래 코드 실행 하지 않기. 세번 클릭을 방지하기 위함
 		if(state == 2){
 			return;
 		}
 		total++;
+		$("#count").text(total);
 		state++;
 		$(this).toggleClass("flipped");
 		if (1 == state) {
@@ -151,25 +245,71 @@ $(document).ready( function(){
 			console.log(twoPic);
 			if ($(onePic).attr("id") == $(twoPic).attr("id")) {
 				success++;
-				if (success == model.length / 2) {
-					alert("게임종료! "+loginState+"님의 기록시간은 "+timerNum+"이고 횟수는 "+total+"입니다 🌟");
-					console.log(loginState);
-					// 디비에 게임기록 저장
-					$.ajax({
-                        url: "/puzzle/AddReport",
-                        method: "POST",
-                        data: {"timer": timerNum,
-                              "count": total,
-                              "memberId": loginState
-                              },
-                     }); 
-					//타이머 종료
-					clearInterval(timer);
-					return;
-				}
-				$(onePic).unbind("click");
-				$(twoPic).unbind("click");
 				state = 0;
+				if (success == model.length / 2) {
+					alert("스테이지"+stage+" 클리어‼ \n"+loginState+"님의 누적시간은 "+timerNum+"이고 시도횟수는 "+total+"입니다 ☑");
+					console.log(timeLeft,"<- 남은시간");
+					timeLeft = 4;
+					temp=0;
+					console.log(timeLeft,"<- 남은시간");
+					console.log(loginState);
+					stage ++;
+					console.log(stage);
+					success =0;
+					if(stage < 4) {
+						// stage1 이면 모델1, stage2 이면 모델2, 
+						console.log("stage: ", stage);
+						if(stage == 2) {
+							model = model2;	
+							cardRow +=2;
+						} else if(stage == 3) {
+							model = model3;
+							cardRow +=2;
+						}
+						console.log("***model.length: ", model.length);
+						// 모델 셔플
+//						for(let i=0; i<100000; i++) {
+//							let ran = Math.floor(Math.random()*model.length);
+//							let tmp = model[0];
+//							model[0] = model[ran];
+//							model[ran] = tmp
+//				 		}
+						// 모델 출력
+						$("#board").empty();
+						$("#board").append("<tr>");
+						$(model).each( function(index, item) {
+							// 우클릭 방지 : oncontextmenu ='return
+							// false'
+							// 드래그 방지 : ondragstart ='return false'
+							let html = "<td oncontextmenu ='return false' ondragstart ='return false' ><div class='cards'>"
+									+ "<div class='card' id='pic-"+item+"'><div class='front' id='p"+index+"'><input type='image' src='/puzzle/pzImage/"
+									+ item + "'></div><div class='back'><p>🎆</p></div></div></div></td>";
+
+							if (index / cardRow > 0 && index % cardRow == 0) {
+								console.log(index);
+								$("#board").append("</tr><tr>");
+							}
+							$("#board").append(html);		
+						});			
+							
+					} else {
+						// 서버로 최종 결과 전송
+						alert("게임종료✔️ \n"+loginState+"님의 최종 기록시간은 "+timerNum+"이고 최종 시도횟수는 "+total+"입니다 🎊");
+						console.log(loginState);
+						// 디비에 게임기록 저장
+						$.ajax({
+	                        url: "/puzzle/AddReport",
+	                        method: "POST",
+	                        data: {"timer": timerNum,
+	                              "count": total,
+	                              "memberId": loginState
+	                              },
+	                     }); 
+						//타이머 종료
+						clearInterval(timer);
+						return;
+					}
+				}				
 			} else {
 				// 2번째 선택한 카드 확인
 				setTimeout(function() {
