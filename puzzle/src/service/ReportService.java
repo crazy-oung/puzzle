@@ -14,6 +14,7 @@ import model.ReportDao;
 public class ReportService {
 	// 마이리포트
 	public List selectMemberReport(Member member) {
+		System.out.println("::: selectMemberReport@ReportService 실행 :::");
 		 List<Report> list = new ArrayList<Report>();
 	      DBService dbService = new DBService();
 	      ReportDao reportDao = new ReportDao();
@@ -31,7 +32,9 @@ public class ReportService {
 	      return list;
 	}
 	
+	// dao로 이번달 랭킹 조회 
 	public List<Report> selectMonthlyRankList(int limit){
+		System.out.println("::: selectMonthlyRankList@ReportService 실행 :::");
 	      List<Report> list = new ArrayList<Report>();
 	      DBService dbService = new DBService();
 	      ReportDao reportDao = new ReportDao();
@@ -50,7 +53,9 @@ public class ReportService {
 	      return list;
 	}
 	
+	// dao로 오늘 랭킹 조회 
 	public List<Report> SelectTodayRankList(int limit){
+		System.out.println("::: SelectTodayRankList@ReportService 실행 :::");
 	      List<Report> list = new ArrayList<Report>();
 	      DBService dbService = new DBService();
 	      ReportDao reportDao = new ReportDao();
@@ -71,7 +76,9 @@ public class ReportService {
 	      return list;
 	}
 	
+	// dao로 종합 랭킹 조회 
 	public List<Report> selectOverallRankList(int limit){
+		System.out.println("::: selectOverallRankList@ReportService 실행 :::");
 	      List<Report> list = new ArrayList<Report>();
 	      DBService dbService = new DBService();
 	      ReportDao reportDao = new ReportDao();
@@ -90,8 +97,9 @@ public class ReportService {
 	      return list;
 	}
 
-	
+	// dao를 사용해 결과 저장 
    public void addReport(Report report) {
+	   System.out.println("::: addReport@ReportService 실행 :::");
       Connection conn = null;      
       try {
          DBService dbService = new DBService();

@@ -18,6 +18,7 @@
 <body>
 <div align="center" class="container">
 	<h1><b>로그인</b></h1>
+	<!--  로그인 폼 시작 -->
 	<table align ="center" class="table" style="width: 50%">
       <tr>
          <td>아이디</td>
@@ -27,28 +28,36 @@
          <td>비밀번호</td>
          <td><input id="memberPw" class="form-control" type="password"></td>
       </tr>
-   </table>
-   <hr>
+   </table><!-- 로그인 끝 -->
+   <hr><!-- 버튼리스트 -->
    <button id="loginBtn" class="btn btn-info">로그인</button>
-   <hr>
-	공용 아이디: goodee <br>
-	공용 비밀번호: 1
+   <button id="toHomeBtn" class="btn btn-primary">홈</button>
+   <hr><!-- 공용아이디 표시 -->
+	<p>공용 아이디: goodee <p>
+	<p>공용 비밀번호: 1<p>
 </div>
 </body>      
 <script src="/puzzle/scripts/jquery-3.4.1.min.js"></script>
 <script>
+	/* TODO
+		- 로그인 버튼 
+		- 홈으로 버튼 
+	*/
+	//로그인 버튼 클릭시 회원 인덱스 페이지로 이동. 
 	$("#loginBtn").click(function(){
-		console.log("go");
+		console.log("#loginBtn"); 
 		$.ajax({
+			// 포스트 방식으로 Login 서블릿으로 넘겨 유저가 입력한 정보와 일치하는지 확인 및 유저 아이디 가져오기 
 	        url :"/puzzle/Login",
 	        method : "POST",
 	        data : {memberId:$("#memberId").val(), memberPw:$("#memberPw").val()},
 	        success : function(json){
 	         loginState = json;
+	         // 로그인한 유저 아이디
 	         console.log("sessionInfo : ", loginState);
 	         location.href = "/puzzle/index.html";
 	         return;
-	        }, 
+	        }, // 실패시 알림
 	        error: function() {
 				alert("로그인 실패 다시 입력해 주세요.");
 			},
@@ -57,6 +66,10 @@
 			}
 	      });
 	});
-
+	//홈 버튼 클릭시 인덱스 페이지로 이동
+	$("#toHomeBtn").click(function(){
+		location.href="/puzzle/index.html";
+	})
+	
 </script>
 </html>

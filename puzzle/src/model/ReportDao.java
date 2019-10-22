@@ -13,7 +13,9 @@ import db.DBService;
 
 public class ReportDao {
 	
+	// 사용자의 플레이 내역 조회 
 	public List selectMemberReport(Connection conn, Member member) {
+		System.out.println("::: selectMemberReport@ReportDAO 실행 :::");
 		List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
@@ -45,7 +47,9 @@ public class ReportDao {
 	      return list;
 	}
 	
+	// 이번달 사용자 랭킹 출력 
 	 public List<Report> selectMonthlyRankList(Connection conn, int limit) throws Exception{
+		 System.out.println("::: selectMonthlyRankList@ReportDAO 실행 :::");
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
@@ -76,7 +80,9 @@ public class ReportDao {
 	      return list;
 	   }
 	
+	 // 오늘 랭킹 출력 
 	 public List<Report> selectTodayRankList(Connection conn, int limit) throws Exception{
+		 System.out.println("::: selectTodayRankList@ReportDAO 실행 :::");
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
@@ -107,7 +113,9 @@ public class ReportDao {
 	      return list;
 	   }
 	 
+	 // 주간 랭킹 출력 (기능에서 제외 . 차후 추가 예정)
 	 public List<Report> selectWeeklyRankList(Connection conn, int limit) throws Exception{
+		 System.out.println("::: selectWeeklyRankList@ReportDAO 실행 :::");
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
@@ -138,7 +146,9 @@ public class ReportDao {
 	      return list;
 	   }
 	
+	 // 종합 랭킹 
 	 public List<Report> selectOverallRankList(Connection conn, int limit) throws Exception{
+		 System.out.println("::: selectOverallRankList@ReportDAO 실행 :::");
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
@@ -167,7 +177,9 @@ public class ReportDao {
 	      return list;
 	   }
 	 
+	 //게임 결과 저장 - 게임 결과 추가 
    public void AddReport(Connection conn, Report report) throws Exception{
+	   System.out.println("::: AddReport@ReportDAO 실행 :::");
          PreparedStatement stmt = null;
          String sql = "INSERT INTO report(member_id, report_date, count, timer) VALUES (?, now(), ?, ?)";
          try {

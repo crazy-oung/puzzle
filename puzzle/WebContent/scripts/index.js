@@ -11,7 +11,7 @@ $(document).ready(function(){
 			console.log("sessionInfo : ", loginState);
 		}
 	});
-
+	// 기본적으로 보여줄 
 	let menu =	" <button type='button' class='btn btn-success' id='totalTop10'>🏆종합 TOP10</button> " +
 				" <button type='button' class='btn btn-success' id='dailyTop10'>🥇오늘의 TOP10</button> " + 
 				" <button type='button' class='btn btn-success' id='monthlyTop10'>🏅이달의 TOP10</button> ";

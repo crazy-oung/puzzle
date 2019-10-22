@@ -9,7 +9,9 @@ import model.MemberDao;
 import model.Report;
 
 public class MemberService {
-	public void SubMember(Member member) {
+	// 회원 탈퇴 - 회원을 삭제 하지 않고 레벨을 N으로 바꿈 .
+	public void WithdrawMember(Member member) {
+		System.out.println("::: WithdrawMember@MemberService 실행::: ");
 	      Connection conn = null;
 	      MemberDao memberDao = null;
 	      try   {
@@ -32,8 +34,9 @@ public class MemberService {
 	         }
 	      }	      
 	}
-	
+	// 회원정보 수정 
 	public String UpdateMemberInfo(Member member, String newPw) {
+		System.out.println("::: UpdateMemberInfo@MemberService 실행::: ");
 		Connection conn = null;
 		String result = null;
 		try {
@@ -56,7 +59,9 @@ public class MemberService {
 		return result;
 	}
 	
+	//회원정보 조회
 	public String selectMemberInfo(Member member) {
+		System.out.println("::: selectMemberInfo@MemberService 실행::: ");
 		Connection conn = null;
 		Member returnMember = null;
 		try {
@@ -83,6 +88,7 @@ public class MemberService {
 	
 	//로그인
 	public String login(Member member) {
+		System.out.println("::: login@MemberService 실행::: ");
 		Connection conn = null;
 		Member returnMember = null;
 		try {
@@ -109,6 +115,7 @@ public class MemberService {
 	
 	//회원가입
 	public void addMember(Member member) {
+		System.out.println("::: addMember@MemberService 실행::: ");
 	      Connection conn = null;
 	      MemberDao memberDao = null;
 	      try   {

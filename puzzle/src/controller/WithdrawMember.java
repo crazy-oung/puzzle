@@ -18,9 +18,12 @@ public class WithdrawMember extends HttpServlet {
    private static final long serialVersionUID = 1L;
        
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	   System.out.println("::: servelt @WithdrawMember 실행 :::");
       response.setContentType("application/json;charset=utf-8");
+      
       MemberService memberService = new MemberService();
       Member member = new Member();
+      
       String memberId = request.getParameter("memberId");
       System.out.println("AddMember Servlet memberId : "+ memberId);
       String memberPw = request.getParameter("memberPw");
@@ -28,10 +31,12 @@ public class WithdrawMember extends HttpServlet {
       
       member.setMemberId(memberId);
       member.setMemberPw(memberPw);
-      memberService.SubMember(member);
+      
+      memberService.WithdrawMember(member);
       
       Gson gson = new Gson();
       String json = gson.toJson(true);
+      
       response.getWriter().write(json);
    }
 }

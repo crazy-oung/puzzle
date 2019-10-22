@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 public class Logout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("::: servelt @Logout 실행 :::");
 		request.getSession().invalidate(); 
 		String jsonElement = null;
 		Gson gson = new Gson();

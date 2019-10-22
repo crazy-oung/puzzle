@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBService {
+	// 디비와 연결 
 	 public static Connection getConnection() throws Exception{
 	       Class.forName("org.mariadb.jdbc.Driver");
 	       Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/puzzle","root","java1234");
