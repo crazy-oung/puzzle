@@ -15,7 +15,7 @@
 <body>
 <div align="center" class="container">
 	<h1><b>마이페이지</b></h1>
-	<hr>
+	<hr><!--마이페이지 정보 기입 폼 -->
 	<div class="well">
 		<table class="" style="width: 50%">
 	      <tr>
@@ -43,8 +43,8 @@
 	         </td>
 	      </tr>
    		</table>
-   		<tr>
-	</div>
+	</div><!--마이페이지 정보 기입 폼 끝 -->
+	<!-- 바로가기 버튼 리스트  -->
 	<button class="btn btn-primary" id="editInfoBtn">수정하기</button>
 	<button id="toHome" class="btn btn-info">홈으로 ></button>
 	<button id="withDrawBtn" class="btn btn-danger">회원탈퇴</button>
@@ -56,7 +56,7 @@
 	$(document).ready(function(){		
 		$.ajax({
 			url : "/puzzle/GetSessionInfo",
-			async : false, // 동기요청
+			async : false, // 동기요청 
 			method : "POST",
 			success : function(json) {
 				loginState = json;
@@ -66,6 +66,7 @@
 		if(loginState == null){
 			alert("로그인을 하셔야 마이페이지를 이용할 수 있습니다!");
 			location.href="/puzzle/login.html";
+			return;
 		}		 
 		
 		// 나의 정보(id) 출력 
@@ -100,15 +101,23 @@
 	});
 	// 회원 탈퇴
 	$("#withDrawBtn").click(function(){
+		if($("#memberPw").val() == ""){
+			alert("비밀번호를 입력해주세요!");
+			return;
+		}
          $.ajax({
-            url: "/puzzle/SubMember",
+            url: "/puzzle/WithdrawMember",
             method: "POST",
             data: {"memberId":$("#memberId").val(),
                  "memberPw":$("#memberPw").val()},
                  success: function(){
-                    location.href = "/puzzle/login.html";
-                      return false;
-                 }
+					alert("⛔ 회원 탈퇴 완료 ⛔");
+                	location.href = "/puzzle/index.html";
+					return false;
+                 },
+                 fail:function(){
+                	alert("회원탈퇴를 완료 하지 못했습니다 !"); 
+                 },
          });
    });
 	//홈으로
