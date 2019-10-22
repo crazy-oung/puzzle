@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Puzzle mind start!</title>
+<!-- 부트스트랩 -->
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -15,6 +16,7 @@
 <script src="/jquery-ex/scripts/jquery-3.4.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
 <style>
+/* 카드 뒤집기 애니메이션 담당 css */
 .cards {
     width: 200px;
     height: 150px;
@@ -54,12 +56,16 @@
     -o-backface-visibility: hidden;
     backface-visibility: hidden;
 }
+.card .front{
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15) ;
+}
 .card .back {
     background: black;
     -webkit-transform: rotateY( 180deg );
     -moz-transform: rotateY( 180deg );
     -o-transform: rotateY( 180deg );
     transform: rotateY( 180deg );
+	box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.15) ;
 }
 .card.flipped {
     -webkit-transform: rotateY( 180deg );
@@ -67,7 +73,6 @@
     -o-transform: rotateY( 180deg );
     transform: rotateY( 180deg );
 }
-
 </style>
 </head>
 <body>
@@ -76,20 +81,29 @@
 	😆 <b id="user"></b>님 즐거운 시간 보내세요 💖 
 	<hr>
 	<p>
+		<!-- 남은 초 표시 -->
 		<b id="timer"> 시작! </b> &nbsp; 
-		<button class="btn btn-sm btn-info text-warning" id="hintBtn">전체보기</button> &nbsp; 
-		<small style="font-style: italic;">남은 힌트 횟수: <b><span id="remainHint"></span></b> </small>
+		<!-- 힌트 버튼 -->
+		<button class="btn btn-sm btn-info text-warning" id="hintBtn">힌트</button> &nbsp; 
+		<!-- 남은 힌트 횟수 표시 -->
+		<small style="font-style: italic;">
+			남은 힌트 횟수: <b><span id="remainHint"></span></b> 
+		</small>
 	</p>
 	<hr>
-	<table id="board" align ="center" class="table-borderless" class="container">
+	<!-- 카드 표시 -->
+	<table id="board" class="table-borderless" class="container">
 	</table>
 	<hr>
+	<!-- 총 클릭 횟수 -->
 	<p>도전횟수:&nbsp;<b id="count">0</b>회 </p>
 	<hr>
+	<!-- 바로가기 버튼 리스트 -->
 	<button id="againBtn" class="btn btn-success">다시하기 💦</button>  
 	<button id="toHomeBtn" class="btn btn-primary">홈으로 💥 </button>
 	<button id="logoutBtn" class="btn btn-warning">로그아웃 💨</button> 
 </div>	
 </body>
+<!--  퍼즐 스크립트 분리 -->
 <script src="/puzzle/scripts/puzzle.js"></script>
 </html>
