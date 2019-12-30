@@ -19,7 +19,7 @@ public class ReportDao {
 		List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
-	      String sql = "SELECT report_id, report_date, count, timer FROM report "
+	      String sql = "SELECT report_id, report_date, count, timer FROM puzzle_report "
 	      				+ "WHERE member_id = ? ORDER BY report_date DESC";
 	      // todo 마이리포트 페이징 *
 	      try {
@@ -53,7 +53,7 @@ public class ReportDao {
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
-	      String sql = "SELECT member_id, report_date, count, timer FROM report "
+	      String sql = "SELECT member_id, report_date, count, timer FROM puzzle_report "
 	      		+ "WHERE MONTH(report_date) = MONTH(NOW())"
 	      		+ "ORDER BY timer asc LIMIT 0, ?;";
 	      try {
@@ -86,7 +86,7 @@ public class ReportDao {
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
-	      String sql = "SELECT member_id, report_date, count, timer FROM report "
+	      String sql = "SELECT member_id, report_date, count, timer FROM puzzle_report "
 		      		+ "WHERE DATE(report_date) = DATE(NOW())"
 		      		+ "ORDER BY timer asc LIMIT 0, ?;";
 	      try {
@@ -119,7 +119,7 @@ public class ReportDao {
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
-	      String sql = "SELECT member_id, report_date, count, timer FROM report "
+	      String sql = "SELECT member_id, report_date, count, timer FROM puzzle_report "
 		      		+ "WHERE report_date BETWEEN DATE_ADD(NOW(),INTERVAL -1 WEEK) AND NOW()"
 		      		+ "ORDER BY timer asc LIMIT 0, ?;";
 	      try {
@@ -152,7 +152,7 @@ public class ReportDao {
 	      List<Report> list = new ArrayList<Report>();
 	      PreparedStatement stmt = null;
 	      ResultSet rs = null;
-	      String sql = "SELECT member_id, report_date, count, timer FROM report ORDER BY timer asc LIMIT 0, ?;";
+	      String sql = "SELECT member_id, report_date, count, timer FROM puzzle_report ORDER BY timer asc LIMIT 0, ?;";
 	      try {
 	      stmt = conn.prepareStatement(sql);
 	      stmt.setInt(1, limit);
@@ -181,7 +181,7 @@ public class ReportDao {
    public void AddReport(Connection conn, Report report) throws Exception{
 	   System.out.println("::: AddReport@ReportDAO 실행 :::");
          PreparedStatement stmt = null;
-         String sql = "INSERT INTO report(member_id, report_date, count, timer) VALUES (?, now(), ?, ?)";
+         String sql = "INSERT INTO puzzle_report(member_id, report_date, count, timer) VALUES (?, now(), ?, ?)";
          try {
          stmt = conn.prepareStatement(sql);
          stmt.setString(1, report.getMemberId());

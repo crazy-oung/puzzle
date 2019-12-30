@@ -134,6 +134,7 @@ $(document).ready(function(){
 	$("#monthlyTop10").click(function(){
 		console.log("monthlyTop10!");
 		$("#top10Text").text("🏅 이달의 Top 10 🏅");
+		$("#report").empty();
 		$.ajax({
 			url: "/puzzle/SelectMonthlyTop10",
 			method: "POST",
