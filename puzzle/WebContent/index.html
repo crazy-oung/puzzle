@@ -1,48 +1,101 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<title>puzzle mind Home</title>
-<!-- 제이쿼리 -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- 부트스트랩  -->
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<style>
-#view{
-  display: none;
-}
-</style>
+	<meta charset="UTF-8">
+	<title>puzzle mind Home</title>
+	<!-- 제이쿼리 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+	<!-- 부트스트랩  -->
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<style>
+		#view {
+			display: none;
+		}
+	</style>
 </head>
+
 <body>
-<div align="center" class="container">
-	<!-- 사이트 상단부 타이블   -->
-	<marquee direction="left" scrollamount="13" align="center"><h1><b class="text-info">🧩 퍼즐 마인드 🧩 </b></h1></marquee>
-	<hr>
-	<!-- 유저 아이디 표시 -->
-	<p id="loginState"></p>
-	<hr>
-	<!-- 카테고리 버튼 목록  btn-group -->
-	<div id="menu" class="btn-group">
+	<div align="center" class="container">
+		<!-- 사이트 상단부 타이블   -->
+		<marquee direction="left" scrollamount="10">
+			<h1><b class="text-info">🧩 퍼즐 마인드 🧩 </b></h1>
+		</marquee>
+		<hr>
+		<div v-if="loginState">
+			<!-- 유저 아이디 표시 -->
+			<p>{{ loginState }}님 어서오세요</p>
+			<hr>
+		</div>
+
+		<!-- 카테고리 버튼 목록  btn-group -->
+		<div class="btn-group" v-if="loginstate">
+			<button type='button' class='btn btn-success' @click="totalTop10">🏆종합 TOP10</button>
+			<button type='button' class='btn btn-success' @click='dailyTop10'>🥇오늘의 TOP10</button>
+			<button type='button' class='btn btn-success' @click='monthlyTop10'>🏅이달의 TOP10</button>
+			<button type='button' class='btn btn-danger' @click='gameStart'>🎮게임 스타트!</button>
+			<a class='btn btn-primary' href='./puzzle.html'>👀마이페이지</a>
+			<a class='btn btn-primary' href='./myPage.html'>📃마이리포트</a>
+			<button type='button' class='btn btn-warning' id='logout' v-on:click="logout()">로그아웃 💨</button>
+		</div>
+		<div class="btn-group" v-else="loginState">
+			<button type='button' class='btn btn-success' id='totalTop10'>🏆종합 TOP10</button>
+			<button type='button' class='btn btn-success' id='dailyTop10'>🥇오늘의 TOP10</button>
+			<button type='button' class='btn btn-success' id='monthlyTop10'>🏅이달의 TOP10</button>
+			<a class='btn btn-warning' href='./signIn.html'>🔑로그인</a>
+			<a class='btn btn-warning' href='./signUp.html'>🎆회원가입</a>
+		</div>
+		<hr>
+
+		<!-- 클릭한 버튼에 따라 텍스트 표시  top10Text -->
+		<h2><b id="top10Text"></b></h2>
+		<!-- 랭킹/마이리포트 리스트 시작  view-->
+		<div align="center" id="view">
+			<div v-if="report===''">
+				<hr>
+				<br>
+				<br>
+				<h1 class='display-4'>
+					<small>
+						기록이 아직 없군요 ..!<br>
+						기록을 세워 랭커에 도전해보세요 !🔥
+					</small>
+				</h1>
+			</div>
+
+			<!-- 리포트-->
+			<table id="report" class="table table-striped table-hover text-center" v-if="report">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>기록번호</th>
+						<th>횟수</th>
+						<th>기록</th>
+						<th>날짜</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+				<tr v-for="report">
+					<td>{{ index++ }}</td>
+					<td>{{ report.reportId }}</td>
+					<td>{{ report.count }}</td>
+					<td>{{ report.timer }}</td>
+					<td>{{ report.reportDate }}</td>
+				</tr>
+			</table>
+		</div>
+		<!--랭킹/마이리포트 리스트 끝  -->
 	</div>
-	<hr>
-	<!-- 클릭한 버튼에 따라 텍스트 표시  top10Text -->
-	<h2><b id="top10Text"></b></h2>
-	<!-- 랭킹/마이리포트 리스트 시작  view-->
-	<div align="center" id="view">
-		<!-- 리포트  -->
-		<table id="report" class="table table-striped table-hover" style="text-align: center;">
-		</table>
-	</div><!--랭킹/마이리포트 리스트 끝  -->
-</div>
+	<!-- Vue js -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<!-- 스크립트 분리  -->
+	<script src="./scripts/index.js"></script>
 </body>
-<!-- 스크립트 분리  -->
-<script src="/puzzle/scripts/index.js"></script>
+
 </html>
